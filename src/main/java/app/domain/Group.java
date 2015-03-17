@@ -1,13 +1,12 @@
-package domain;
+package app.domain;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * gs-actuator-service
  *
  * @author llaine
- * @package domain
+ * @package app.domain
  */
 abstract class Group {
     private Long id;

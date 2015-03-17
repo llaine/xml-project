@@ -1,10 +1,10 @@
-package rest;
+package app.rest;
 
 /**
  * gs-actuator-service
  *
  * @author llaine
- * @package rest
+ * @package app.rest
  */
 public class GroupResource {
 }

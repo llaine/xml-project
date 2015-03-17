@@ -1,4 +1,4 @@
-package domain;
+package app.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.List;
  * gs-actuator-service
  *
  * @author llaine
- * @package domain
+ * @package app.domain
  */
 public class User implements java.io.Serializable {
     private Long id;

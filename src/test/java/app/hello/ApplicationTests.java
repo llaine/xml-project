@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package hello;
+package app.hello;
 
 import java.util.Map;
 
+import app.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,11 +38,11 @@ import static org.junit.Assert.assertEquals;
  * @author Dave Syer
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = HelloWorldConfiguration.class)
+@SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest({ "server.port=0", "management.port=0" })
 @DirtiesContext
-public class HelloWorldConfigurationTests {
+public class ApplicationTests {
 
 	@Value("${local.server.port}")
 	private int port;
@@ -53,7 +54,7 @@ public class HelloWorldConfigurationTests {
 	public void testGreeting() throws Exception {
 		@SuppressWarnings("rawtypes")
 		ResponseEntity<Map> entity = new TestRestTemplate().getForEntity(
-				"http://localhost:" + this.port + "/hello-world", Map.class);
+				"http://localhost:" + this.port + "/app.hello-world", Map.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}
 
