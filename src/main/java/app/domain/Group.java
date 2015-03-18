@@ -1,5 +1,8 @@
 package app.domain;
 
+import app.interfaces.IGroup;
+import app.xml.XMLHandler;
+
 import java.util.List;
 
 /**
@@ -8,14 +11,14 @@ import java.util.List;
  * @author llaine
  * @package app.domain
  */
-abstract class Group {
+public class Group extends XMLHandler implements IGroup {
     private Long id;
     private String name;
     private List<User> members;
 
-    private void addMember(User u) {
-        this.members.add(u);
+    @Override
+    public void addMember() {
+        //TODO
     }
-
 
 }

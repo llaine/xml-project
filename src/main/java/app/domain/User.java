@@ -1,7 +1,10 @@
 package app.domain;
 
+import app.interfaces.IUser;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * gs-actuator-service
@@ -9,8 +12,8 @@ import java.util.List;
  * @author llaine
  * @package app.domain
  */
-public class User implements java.io.Serializable {
-    private Long id;
+public class User implements IUser {
+    private int id = new AtomicInteger().incrementAndGet();
     private String firstname;
     private String lastname;
     private String password;
@@ -18,6 +21,9 @@ public class User implements java.io.Serializable {
     private String birthdayDate;
     private List<User> friends;
     private List<Group> groups;
+
+    // Excluse from serialization
+    private transient String filename;
 
     public User(String firstname, String lastname, String password, String email, String birthdayDate) {
         this.firstname = firstname;
@@ -32,12 +38,9 @@ public class User implements java.io.Serializable {
     /* Empty constructor */
     public User(){ }
 
+    public int getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -100,4 +103,25 @@ public class User implements java.io.Serializable {
     public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
+
+    public String getFilename(){
+        return "user-" + this.getId() + ".xml";
+    }
+
+    @Override
+    public void addFriends() {
+        // TODO
+    }
+
+    @Override
+    public void addGroup() {
+        // TODO
+    }
+
+    @Override
+    public void addFriendToGroup() {
+        // TODO
+    }
+
+
 }
