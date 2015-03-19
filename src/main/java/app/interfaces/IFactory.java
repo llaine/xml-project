@@ -11,6 +11,6 @@ import java.util.Properties;
  */
 public interface IFactory {
 
-    public Object createClass(String... properties);
+    public Object createClass();
 
 }

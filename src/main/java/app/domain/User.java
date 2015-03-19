@@ -1,9 +1,9 @@
 package app.domain;
 
 import app.interfaces.IUser;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @package app.domain
  */
 public class User implements IUser {
-    private int id = new AtomicInteger().incrementAndGet();
+    private Long id;
     private String firstname;
     private String lastname;
     private String password;
@@ -21,9 +21,6 @@ public class User implements IUser {
     private String birthdayDate;
     private List<User> friends;
     private List<Group> groups;
-
-    // Excluse from serialization
-    private transient String filename;
 
     public User(String firstname, String lastname, String password, String email, String birthdayDate) {
         this.firstname = firstname;
@@ -38,9 +35,9 @@ public class User implements IUser {
     /* Empty constructor */
     public User(){ }
 
-    public int getId() { return id; }
+    public Long getId() { return id; }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -104,24 +101,33 @@ public class User implements IUser {
         this.groups = groups;
     }
 
-    public String getFilename(){
+    @Override
+    public String getUniqueFileName(){
         return "user-" + this.getId() + ".xml";
     }
 
-    @Override
-    public void addFriends() {
-        // TODO
+
+    /**
+     * get a specific group, lambda style expression!
+     * @param id
+     * @return
+     */
+    public Optional<Group> getGroup(Long id){
+        return Optional.ofNullable(
+                groups.stream()
+                        .filter(group -> group.getId().equals(id))
+                        .findAny()
+                ).orElse(null);
     }
 
     @Override
-    public void addGroup() {
-        // TODO
+    public void addFriends(User user) {
+        this.friends.add(user);
     }
 
     @Override
-    public void addFriendToGroup() {
-        // TODO
+    public void addGroup(Group group) {
+        this.groups.add(group);
     }
-
 
 }

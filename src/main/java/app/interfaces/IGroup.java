@@ -9,4 +9,6 @@ package app.interfaces;
 public interface IGroup extends Savable {
 
     public void addMember();
+
+    public String getUniqueFileName();
 }

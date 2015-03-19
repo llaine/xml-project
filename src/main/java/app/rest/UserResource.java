@@ -67,7 +67,7 @@ public class UserResource {
     public @ResponseBody ResponseEntity<User> getUser(@PathVariable Long id){
         log.debug("REST request to User : {}", id);
 
-        return Optional.ofNullable((User) userRepo.load(id.intValue()))
+        return Optional.ofNullable((User) userRepo.load(id))
                 .map(user -> new ResponseEntity<>(
                         user,
                         HttpStatus.OK

@@ -1,5 +1,8 @@
 package app.interfaces;
 
+import app.domain.Group;
+import app.domain.User;
+
 /**
  * projetXML
  *
@@ -8,10 +11,10 @@ package app.interfaces;
  */
 public interface IUser extends Savable {
 
-    public void addFriends();
+    public void addFriends(User u);
 
-    public void addGroup();
+    public void addGroup(Group g);
 
-    public void addFriendToGroup();
+    public String getUniqueFileName();
 
 }

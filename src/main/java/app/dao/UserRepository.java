@@ -2,6 +2,8 @@ package app.dao;
 
 import app.domain.User;
 import app.factory.UserFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -13,15 +15,18 @@ import java.util.List;
  */
 public class UserRepository extends UserFactory {
 
+    private final Logger log = LoggerFactory.getLogger(UserRepository.class);
+
     /**
      * Save a specific object to the "database".
      * @param u
      */
     public void save(User u) {
-        this.setFile(u.getFilename());
+        log.debug("Saving object {}", u);
 
+        this.setFile(u.getUniqueFileName(), u);
         try {
-            this.saveObject(u.getFilename(), u);
+            this.saveObject(u.getUniqueFileName(), u);
         } catch (Exception e){
             e.printStackTrace();
         }

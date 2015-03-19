@@ -1,6 +1,7 @@
 package app.xml;
 
-import org.omg.CosNaming.NamingContextPackage.NotFound;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -22,6 +23,8 @@ public abstract class XMLHandler {
     private Map files = new HashMap<>();
     private String prefix = "/Users/llaine/Workspace/miage/xml/projetXML/src/data/";
 
+    private final Logger log = LoggerFactory.getLogger(XMLHandler.class);
+
 
     /**
      * Private function which return the right path of a file according to the type.
@@ -30,10 +33,12 @@ public abstract class XMLHandler {
      * @return
      */
     private String getRightDirectory(String file, String type){
+        log.debug("Getting the right directory for {}, {}", file, type);
+
         String pathToDirectory = "";
-        if(type.equals("User")){
+        if(type.equals("app.domain.User")){
             pathToDirectory = prefix + "users/" + file;
-        }else if(type.equals("Group")){
+        }else if(type.equals("app.domain.Group")){
             pathToDirectory = prefix + "groups/" + file;
         }
 
@@ -46,12 +51,13 @@ public abstract class XMLHandler {
      * @param type
      * @return
      */
-    private String getRightFileInDirectory(int id, String type){
+    private String getRightFileInDirectory(Long id, String type){
+        log.debug("Getting the right directory for {}, {}", id, type);
         String pathToFile = "";
 
-        if(type.equals("UserFactory")){
+        if(type.equals("app.dao.UserRepository")){
             pathToFile = prefix + "users/user-" + id + ".xml";
-        }else if(type.equals("GroupFactory")){
+        }else if(type.equals("app.dao.GroupRepository")){
             pathToFile = prefix + "groups/group-" + id + ".xml";
         }
 
@@ -59,12 +65,14 @@ public abstract class XMLHandler {
     }
 
     private String getDirectoryFor(String type){
+        log.debug("Getting the right directory for {}", type);
+
         String directoryForObject = "";
 
-        if(type.equals("user")){
-            directoryForObject = prefix + "users";
-        }else if(type.equals("group")){
-            directoryForObject = prefix + "groups";
+        if(type.equals("app.domain.User")){
+            directoryForObject = prefix + "users/";
+        }else if(type.equals("app.domain.Group")){
+            directoryForObject = prefix + "groups/";
         }
 
         return directoryForObject;
@@ -74,18 +82,23 @@ public abstract class XMLHandler {
      * Create the file.
      * @param file
      */
-    public void setFile(String file){
+    public void setFile(String file, Object type){
 
-        String pathToFile = prefix + file;
+        String pathToFile = this.getDirectoryFor(type.getClass().getName());
+
+        pathToFile += file;
 
         File f = new File(pathToFile);
         f.getParentFile().mkdirs();
+
 
         try {
             f.createNewFile();
         } catch(Exception e){
             e.printStackTrace();
         }
+
+        log.debug("Creating a file {}", pathToFile);
 
         // Creating the file and saving to a HashMap
         // TODO Persist the HashMap
@@ -100,6 +113,8 @@ public abstract class XMLHandler {
     public void saveObject(String filename, Object o) throws Exception {
         try {
             File f = new File(this.getRightDirectory(filename, o.getClass().getName()));
+
+            log.debug("Saving {} to path {} ", o.getClass(), f.getAbsolutePath());
 
             if(f.exists() && !f.isDirectory()) {
 
@@ -125,12 +140,15 @@ public abstract class XMLHandler {
      * @throws Exception
      * @return Object
      */
-    public Object loadObject(int idObject, String type) throws Exception {
+    public Object loadObject(Long idObject, String type) throws Exception {
+        log.debug("Loading object {}, {}", idObject, type);
+
         try {
+            String f = getRightFileInDirectory(idObject, type);
 
-            File f = new File(getRightFileInDirectory(idObject, type));
+            log.debug("Fetching object in file {} ", f);
 
-            FileInputStream fs = new FileInputStream(f.getAbsolutePath());
+            FileInputStream fs = new FileInputStream(f);
 
             XMLDecoder decoder = new XMLDecoder(fs);
 
@@ -149,15 +167,16 @@ public abstract class XMLHandler {
      * @return
      */
     public List<Object> listAllByType(String type){
-        File folder = new File(getDirectoryFor(type));
+        log.debug("Listing all object from type {}", type);
 
+        File folder = new File(getDirectoryFor(type));
         File[] listOfFiles = folder.listFiles();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
+        if(listOfFiles != null){
+            for(File file : listOfFiles){
+                if (file.isFile()) {
+                    System.out.println("File " + file.getAbsolutePath());
+                }
             }
         }
 
