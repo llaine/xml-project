@@ -5,6 +5,7 @@ import app.factory.UserFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +39,35 @@ public class UserRepository extends UserFactory {
      * @return List<User>
      */
     public List<User> findAll(){
-        this.listAllByType("user");
+        List<User> lesUsers = new ArrayList<>();
+
+        this.listAllByType("app.domain.User")
+                .stream()
+                .forEach(user -> lesUsers.add((User) user));
+
+        log.debug("Finding all app.domain.User, {}", lesUsers);
+
+        return lesUsers;
+    }
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    public User findOneByUsername(String username, String password){
+        log.debug("Finding one user by username: {} & password :{}", username, password);
+
+        List<User> lesUsers = this.findAll();
+        if(!lesUsers.isEmpty()){
+            for(User userPersisted: lesUsers){
+                if(userPersisted.getFirstname().equals(username) && userPersisted.getPassword().equals(password)){
+                    log.debug("Found {} ", userPersisted);
+                    return userPersisted;
+                }
+            }
+        }
 
         return null;
     }

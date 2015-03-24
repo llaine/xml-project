@@ -3,6 +3,7 @@
 .project
 .settings/
 .idea/
+data/*
 bin/
 build/
 target/

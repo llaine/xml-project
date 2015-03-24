@@ -4,7 +4,6 @@ import app.interfaces.IUser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * gs-actuator-service
@@ -99,6 +98,20 @@ public class User implements IUser {
 
     public void setGroups(List<Group> groups) {
         this.groups = groups;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", birthdayDate='" + birthdayDate + '\'' +
+                ", friends=" + friends +
+                ", groups=" + groups +
+                '}';
     }
 
     @Override

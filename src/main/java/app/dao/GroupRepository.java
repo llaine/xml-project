@@ -1,7 +1,11 @@
 package app.dao;
 
 import app.domain.Group;
+import app.domain.User;
 import app.factory.GroupFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * projetXML
@@ -23,5 +27,21 @@ public class GroupRepository extends GroupFactory {
             e.printStackTrace();
         }
 
+    }
+
+
+    /**
+     * Get all the User persisted.
+     * @return List<User>
+     */
+    public List<Group> findAll(){
+
+        List<Group> lesGroups = new ArrayList<>();
+
+        this.listAllByType("app.domain.Group")
+                .stream()
+                .forEach(group -> lesGroups.add((Group) group));
+
+        return lesGroups;
     }
 }

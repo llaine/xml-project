@@ -8,6 +8,7 @@ import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,6 +163,29 @@ public abstract class XMLHandler {
 
 
     /**
+     *
+     * @param path
+     * @return
+     */
+    public Object loadObjectFromFile(String path){
+        log.debug("Loading object {}", path);
+
+        try {
+
+            FileInputStream fs = new FileInputStream(path);
+
+            XMLDecoder decoder = new XMLDecoder(fs);
+
+            return decoder.readObject();
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    /**
      * List all file from a directory
      * @param type
      * @return
@@ -172,15 +196,16 @@ public abstract class XMLHandler {
         File folder = new File(getDirectoryFor(type));
         File[] listOfFiles = folder.listFiles();
 
-        if(listOfFiles != null){
-            for(File file : listOfFiles){
-                if (file.isFile()) {
-                    System.out.println("File " + file.getAbsolutePath());
-                }
+        List<Object> objectsInDirectory = new ArrayList<>();
+
+        if(listOfFiles != null) {
+            for(File file : listOfFiles) {
+                if (file.isFile())
+                    objectsInDirectory.add(this.loadObjectFromFile(file.getAbsolutePath()));
             }
         }
 
-        return null;
+        return objectsInDirectory;
     }
 
 }

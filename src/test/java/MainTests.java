@@ -25,8 +25,6 @@ public class MainTests {
         GroupRepository groupRepo = new GroupRepository();
 
 
-        /*
-
 
         // Create some users
         User toto = userRepo.createClass("Louis", "Lainé", "password", "email", "19/08/1993");
@@ -51,17 +49,12 @@ public class MainTests {
 
         Optional<Group> g = toto.getGroup(newGroup.getId());
 
-        System.out.println(g.get().getName());
-        */
+        userRepo.save(toto);
 
-        User u = (User) userRepo.load(Long.valueOf(1));
-
-        System.out.println(u.getLastname());
+        groupRepo.save(newGroup);
 
 
-        userRepo.listAllByType("app.domain.Group");
-
-
+        User u = userRepo.findOneByUsername("Louis", "password");
 
     }
 }
