@@ -1,8 +1,7 @@
-package app.dao;
+package com.miagebdx.dao;
 
-import app.domain.Group;
-import app.domain.User;
-import app.factory.GroupFactory;
+import com.miagebdx.domain.Group;
+import com.miagebdx.factory.GroupFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * projetXML
  *
  * @author llaine
- * @package app.dao
+ * @package com.miagebdx.dao
  */
 public class GroupRepository extends GroupFactory {
     /**
@@ -38,7 +37,7 @@ public class GroupRepository extends GroupFactory {
 
         List<Group> lesGroups = new ArrayList<>();
 
-        this.listAllByType("app.domain.Group")
+        this.listAllByType("com.miagebdx.domain.Group")
                 .stream()
                 .forEach(group -> lesGroups.add((Group) group));
 

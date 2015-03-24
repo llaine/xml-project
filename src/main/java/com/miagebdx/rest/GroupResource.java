@@ -1,8 +1,8 @@
-package app.rest;
+package com.miagebdx.rest;
 
 import java.util.List;
-import app.dao.GroupRepository;
-import app.domain.Group;
+import com.miagebdx.dao.GroupRepository;
+import com.miagebdx.domain.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * gs-actuator-service
  *
  * @author llaine
- * @package app.rest
+ * @package com.miagebdx.rest
  */
 
 @Controller

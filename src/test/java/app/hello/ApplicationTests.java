@@ -17,7 +17,7 @@ package app.hello;
 
 import java.util.Map;
 
-import app.Application;
+import com.miagebdx.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;

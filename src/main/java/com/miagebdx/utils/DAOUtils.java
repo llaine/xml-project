@@ -1,4 +1,4 @@
-package app.utils;
+package com.miagebdx.utils;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * projetXML
  *
  * @author llaine
- * @package app.utils
+ * @package com.miagebdx.utils
  */
 public class DAOUtils {
 

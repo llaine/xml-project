@@ -1,13 +1,11 @@
-package app.interfaces;
+package com.miagebdx.interfaces;
 
-
-import java.util.Properties;
 
 /**
  * projetXML
  *
  * @author llaine
- * @package app.interfaces
+ * @package com.miagebdx.interfaces
  */
 public interface IFactory {
 

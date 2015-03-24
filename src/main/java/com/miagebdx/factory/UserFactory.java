@@ -1,9 +1,9 @@
-package app.factory;
+package com.miagebdx.factory;
 
-import app.domain.User;
-import app.interfaces.IFactory;
-import app.utils.DAOUtils;
-import app.xml.XMLHandler;
+import com.miagebdx.domain.User;
+import com.miagebdx.interfaces.IFactory;
+import com.miagebdx.utils.DAOUtils;
+import com.miagebdx.xml.XMLHandler;
 
 /**
  * projetXML
@@ -18,14 +18,13 @@ public class UserFactory extends XMLHandler implements IFactory {
     @Override
     public User createClass() {
         User u = new User();
-        u.setId(daoUtils.getCount());
+        u.setId(daoUtils.getRandomLong());
         return u;
     }
 
     public User createClass(String firstname, String lastname, String password, String email, String birthdayDate){
         User u = new User(firstname, lastname, password, email, birthdayDate);
-        u.setId(daoUtils.getCount());
-
+        u.setId(daoUtils.getRandomLong());
         return u;
     }
 

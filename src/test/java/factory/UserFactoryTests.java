@@ -1,10 +1,8 @@
 package factory;
 
-import app.Application;
-import app.domain.User;
-import app.factory.UserFactory;
-import app.interfaces.IFactory;
-import org.junit.Before;
+import com.miagebdx.Application;
+import com.miagebdx.factory.UserFactory;
+import com.miagebdx.interfaces.IFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,6 @@
-package app.domain;
+package com.miagebdx.domain;
 
-import app.interfaces.IGroup;
-import app.xml.XMLHandler;
+import com.miagebdx.interfaces.IGroup;
 
 import java.util.List;
 
@@ -9,7 +8,7 @@ import java.util.List;
  * gs-actuator-service
  *
  * @author llaine
- * @package app.domain
+ * @package com.miagebdx.domain
  */
 public class Group implements IGroup {
     private Long id;

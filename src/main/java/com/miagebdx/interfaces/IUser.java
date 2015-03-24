@@ -1,13 +1,13 @@
-package app.interfaces;
+package com.miagebdx.interfaces;
 
-import app.domain.Group;
-import app.domain.User;
+import com.miagebdx.domain.Group;
+import com.miagebdx.domain.User;
 
 /**
  * projetXML
  *
  * @author llaine
- * @package app.interfaces
+ * @package com.miagebdx.interfaces
  */
 public interface IUser extends Savable {
 

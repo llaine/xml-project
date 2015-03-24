@@ -1,4 +1,4 @@
-package app.xml;
+package com.miagebdx.xml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import java.util.Map;
  * projetXML
  *
  * @author llaine
- * @package app.xml
+ * @package com.miagebdx.xml
  */
 public abstract class XMLHandler {
 
@@ -34,12 +34,12 @@ public abstract class XMLHandler {
      * @return
      */
     private String getRightDirectory(String file, String type){
-        log.debug("Getting the right directory for {}, {}", file, type);
+        log.info("Getting the right directory for {}, {}", file, type);
 
         String pathToDirectory = "";
-        if(type.equals("app.domain.User")){
+        if(type.equals("com.miagebdx.domain.User")){
             pathToDirectory = prefix + "users/" + file;
-        }else if(type.equals("app.domain.Group")){
+        }else if(type.equals("com.miagebdx.domain.Group")){
             pathToDirectory = prefix + "groups/" + file;
         }
 
@@ -53,12 +53,12 @@ public abstract class XMLHandler {
      * @return
      */
     private String getRightFileInDirectory(Long id, String type){
-        log.debug("Getting the right directory for {}, {}", id, type);
+        log.info("Getting the right directory for {}, {}", id, type);
         String pathToFile = "";
 
-        if(type.equals("app.dao.UserRepository")){
+        if(type.equals("com.miagebdx.dao.UserRepository")){
             pathToFile = prefix + "users/user-" + id + ".xml";
-        }else if(type.equals("app.dao.GroupRepository")){
+        }else if(type.equals("com.miagebdx.dao.GroupRepository")){
             pathToFile = prefix + "groups/group-" + id + ".xml";
         }
 
@@ -66,13 +66,13 @@ public abstract class XMLHandler {
     }
 
     private String getDirectoryFor(String type){
-        log.debug("Getting the right directory for {}", type);
+        log.info("Getting the right directory for {}", type);
 
         String directoryForObject = "";
 
-        if(type.equals("app.domain.User")){
+        if(type.equals("com.miagebdx.domain.User")){
             directoryForObject = prefix + "users/";
-        }else if(type.equals("app.domain.Group")){
+        }else if(type.equals("com.miagebdx.domain.Group")){
             directoryForObject = prefix + "groups/";
         }
 
@@ -99,7 +99,7 @@ public abstract class XMLHandler {
             e.printStackTrace();
         }
 
-        log.debug("Creating a file {}", pathToFile);
+        log.info("Creating a file {}", pathToFile);
 
         // Creating the file and saving to a HashMap
         // TODO Persist the HashMap
@@ -115,7 +115,7 @@ public abstract class XMLHandler {
         try {
             File f = new File(this.getRightDirectory(filename, o.getClass().getName()));
 
-            log.debug("Saving {} to path {} ", o.getClass(), f.getAbsolutePath());
+            log.info("Saving {} to path {} ", o.getClass(), f.getAbsolutePath());
 
             if(f.exists() && !f.isDirectory()) {
 
@@ -142,12 +142,12 @@ public abstract class XMLHandler {
      * @return Object
      */
     public Object loadObject(Long idObject, String type) throws Exception {
-        log.debug("Loading object {}, {}", idObject, type);
+        log.info("Loading object {}, {}", idObject, type);
 
         try {
             String f = getRightFileInDirectory(idObject, type);
 
-            log.debug("Fetching object in file {} ", f);
+            log.info("Fetching object in file {} ", f);
 
             FileInputStream fs = new FileInputStream(f);
 
@@ -168,7 +168,7 @@ public abstract class XMLHandler {
      * @return
      */
     public Object loadObjectFromFile(String path){
-        log.debug("Loading object {}", path);
+        log.info("Loading object {}", path);
 
         try {
 
@@ -191,7 +191,7 @@ public abstract class XMLHandler {
      * @return
      */
     public List<Object> listAllByType(String type){
-        log.debug("Listing all object from type {}", type);
+        log.info("Listing all object from type {}", type);
 
         File folder = new File(getDirectoryFor(type));
         File[] listOfFiles = folder.listFiles();

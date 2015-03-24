@@ -1,4 +1,4 @@
-package app.config;
+package com.miagebdx.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  * projetXML
  *
  * @author llaine
- * @package app.config
+ * @package com.miagebdx.config
  */
 
 @Configuration
@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
 

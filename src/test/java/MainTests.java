@@ -1,15 +1,11 @@
-import app.dao.GroupRepository;
-import app.dao.UserRepository;
-import app.domain.Group;
-import app.domain.User;
+import com.miagebdx.dao.GroupRepository;
+import com.miagebdx.dao.UserRepository;
+import com.miagebdx.domain.Group;
+import com.miagebdx.domain.User;
 
-import app.factory.UserFactory;
-
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * projetXML

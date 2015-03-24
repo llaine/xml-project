@@ -1,10 +1,10 @@
-package app.interfaces;
+package com.miagebdx.interfaces;
 
 /**
  * projetXML
  *
  * @author llaine
- * @package app.interfaces
+ * @package com.miagebdx.interfaces
  */
 public interface IGroup extends Savable {
 

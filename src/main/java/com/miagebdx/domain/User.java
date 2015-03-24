@@ -1,6 +1,6 @@
-package app.domain;
+package com.miagebdx.domain;
 
-import app.interfaces.IUser;
+import com.miagebdx.interfaces.IUser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import java.util.Optional;
  * gs-actuator-service
  *
  * @author llaine
- * @package app.domain
+ * @package com.miagebdx.domain
  */
 public class User implements IUser {
     private Long id;

@@ -1,10 +1,10 @@
-package app.factory;
+package com.miagebdx.factory;
 
-import app.domain.Group;
-import app.domain.User;
-import app.interfaces.IFactory;
-import app.utils.DAOUtils;
-import app.xml.XMLHandler;
+import com.miagebdx.domain.Group;
+import com.miagebdx.domain.User;
+import com.miagebdx.interfaces.IFactory;
+import com.miagebdx.utils.DAOUtils;
+import com.miagebdx.xml.XMLHandler;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * projetXML
  *
  * @author llaine
- * @package app.factory
+ * @package com.miagebdx.factory
  */
 public class GroupFactory extends XMLHandler implements IFactory {
 
