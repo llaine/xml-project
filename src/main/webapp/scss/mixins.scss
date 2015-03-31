@@ -1,0 +1,21 @@
+/* variables definition */
+$font: 'Helvetica neue', Helvetica, Arial, sans-serif;
+
+$break-small: 320px;
+$break-medium: 600px;
+$break-large: 1200px;
+$grid-height: 500px;
+
+$grey: #e3e3e3;
+
+/* Reset classes  */
+html, body, div, span, h1, h2, h3, li, ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+
+main {
+  margin-top: 1%;
+}
