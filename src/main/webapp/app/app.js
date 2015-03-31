@@ -6,13 +6,21 @@
 
 'use strict';
 
-angular.module('ngContactManager', ['ngRoute'])
-    /* Routing */
+angular.module('ngContactManager', ['ngRoute', 'ngCookies'])
+    .run(['$rootScope', 'Auth', '$location', function($rootScope, Auth, $location) {
+        $rootScope.$on('$routeChangeSuccess', function () {
+            Auth.validate().then(function (data) {
+                if(data === 401){
+                    alert('ok');
+                }
+            });
+        });
+    }])
+    /* Routing configuration */
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: '/app/home/home.html',
-            controller: 'homeController',
-            login: true
+            controller: 'homeController'
         }).when('/login', {
             templateUrl: '/app/login/login.html',
             controller: 'loginController',

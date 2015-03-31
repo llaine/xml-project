@@ -4,8 +4,8 @@
 
 'use strict';
 
+var app = angular.module('ngContactManager');
 
-angular.module('ngContactManager')
-    .controller('homeController', [function() {
+app.controller('homeController', [function () {
 
-    }]);
+}]);

@@ -1,0 +1,10 @@
+{
+  "dev": {
+    "serverPort"        : "9001",
+    "serverHost"        : "localhost"
+  },
+  "prod": {
+    "serverPort"        : "8080",
+    "serverHost"        : "10.33.33.33"
+  }
+}
