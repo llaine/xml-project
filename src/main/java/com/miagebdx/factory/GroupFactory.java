@@ -23,8 +23,8 @@ public class GroupFactory extends XMLHandler implements IFactory {
         return new Group();
     }
 
-    public Group createClass(String name, List<User> members){
-        return new Group(daoUtils.getRandomLong(), name, members);
+    public Group createClass(String name){
+        return new Group(daoUtils.getRandomLong(), name);
     }
 
     /**

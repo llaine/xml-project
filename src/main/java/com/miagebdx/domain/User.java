@@ -119,6 +119,37 @@ public class User implements IUser {
         return "user-" + this.getId() + ".xml";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (birthdayDate != null ? !birthdayDate.equals(user.birthdayDate) : user.birthdayDate != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (firstname != null ? !firstname.equals(user.firstname) : user.firstname != null) return false;
+        if (friends != null ? !friends.equals(user.friends) : user.friends != null) return false;
+        if (groups != null ? !groups.equals(user.groups) : user.groups != null) return false;
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (lastname != null ? !lastname.equals(user.lastname) : user.lastname != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (birthdayDate != null ? birthdayDate.hashCode() : 0);
+        result = 31 * result + (friends != null ? friends.hashCode() : 0);
+        result = 31 * result + (groups != null ? groups.hashCode() : 0);
+        return result;
+    }
 
     /**
      * get a specific group, lambda style expression!

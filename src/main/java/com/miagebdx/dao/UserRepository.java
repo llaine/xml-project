@@ -2,7 +2,10 @@ package com.miagebdx.dao;
 
 import com.miagebdx.domain.User;
 import com.miagebdx.exceptions.MissingParametersException;
+import com.miagebdx.exceptions.NotFoundException;
 import com.miagebdx.factory.UserFactory;
+import com.miagebdx.utils.DAOUtils;
+import com.miagebdx.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +21,7 @@ import java.util.List;
 public class UserRepository extends UserFactory {
 
     private final Logger log = LoggerFactory.getLogger(UserRepository.class);
+    private final UserUtils userUtils = UserUtils.getInstance();
 
     /**
      * Save a specific object to the "database".
@@ -32,7 +36,6 @@ public class UserRepository extends UserFactory {
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -79,12 +82,7 @@ public class UserRepository extends UserFactory {
      * @return
      */
     public User createUser(User u) throws MissingParametersException {
-        if(null != u.getFirstname() &&
-            null != u.getLastname() &&
-            null != u.getPassword() &&
-            null != u.getEmail() &&
-            null != u.getBirthdayDate()) {
-
+        if(userUtils.isValidUser(u)){
             User newCreatedUser = this.createClass(u.getFirstname(), u.getLastname(), u.getPassword(), u.getEmail(), u.getBirthdayDate());
 
             log.info("Creating user {} ", newCreatedUser);
@@ -93,6 +91,28 @@ public class UserRepository extends UserFactory {
 
             return newCreatedUser;
 
+        }else{
+            throw new MissingParametersException();
+        }
+    }
+
+    /**
+     * Update a user.
+     * Verify if user's fields are valid.
+     * @param id
+     * @return
+     */
+    public void updateUser(Long id, User user) throws RuntimeException {
+         /* Only three fields are needed to an User object to be valid.  */
+        if(userUtils.isValidUser(user)) {
+
+            log.info("Updating {}, {} ", id, user);
+
+            User u = (User) this.load(id);
+
+            if (null == u) throw new NotFoundException();
+
+            this.save(user);
         }else{
             throw new MissingParametersException();
         }

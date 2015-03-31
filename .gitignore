@@ -8,3 +8,4 @@ bin/
 build/
 target/
 .DS_Store
+node_modules/

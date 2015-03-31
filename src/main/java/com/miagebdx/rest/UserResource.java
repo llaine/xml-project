@@ -50,7 +50,7 @@ public class UserResource {
     }
 
     /**
-     * GET -> /users : get all the users
+     * POST -> /users : Create a specific User
      * @return
      */
     @RequestMapping(method = RequestMethod.POST,
@@ -88,10 +88,26 @@ public class UserResource {
                         HttpStatus.OK
                 ))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-
     }
 
 
+    /**
+     * PUT -> /users/:id : Update a specific user
+     * @param id
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{id}")
+    public @ResponseBody ResponseEntity<?> updateUser(@PathVariable Long id, @ModelAttribute User user, HttpSession session) {
+        authUtils.firewall(session);
 
+        log.debug("REST Update User : {}", id);
+
+        userRepo.updateUser(id, user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 
 }

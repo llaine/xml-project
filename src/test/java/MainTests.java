@@ -21,7 +21,7 @@ public class MainTests {
         GroupRepository groupRepo = new GroupRepository();
 
 
-
+        /*
         // Create some users
         User toto = userRepo.createClass("Louis", "Lainé", "password", "email", "19/08/1993");
         User tati = userRepo.createClass("Toto", "Lainé", "password", "email", "20/08/1993");
@@ -48,9 +48,9 @@ public class MainTests {
         userRepo.save(toto);
 
         groupRepo.save(newGroup);
+        */
 
 
-        User u = userRepo.findOneByUsername("Louis", "password");
 
     }
 }

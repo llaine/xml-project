@@ -35,6 +35,10 @@ public class Authentification {
      */
     @RequestMapping(value="/authenticate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<User> authenticate(@RequestParam String username, @RequestParam String password, HttpSession session) {
+        // User is already connected.
+        if(session.getAttribute("user") != null) return new ResponseEntity<>((User)session.getAttribute("user"), HttpStatus.OK);
+
+
         log.info("Connection tried with {} {}", username, password);
 
         User u = userRepo.findOneByUsername(username, password);
@@ -62,7 +66,7 @@ public class Authentification {
 
         User user = userRepo.createUser(u);
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
 
     }
 }

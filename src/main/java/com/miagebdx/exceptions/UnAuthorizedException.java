@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author llaine
  * @package com.miagebdx.rest
  */
-@ResponseStatus(value= HttpStatus.PROXY_AUTHENTICATION_REQUIRED, reason="Unauthorized access to Resource")
+@ResponseStatus(value= HttpStatus.UNAUTHORIZED, reason="Unauthorized access to Resource")
 public class UnAuthorizedException extends RuntimeException {
     public UnAuthorizedException() {
         super();

@@ -16,10 +16,9 @@ public class Group implements IGroup {
     private List<User> members;
 
 
-    public Group(Long id, String name, List<User> members) {
+    public Group(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.members = members;
     }
 
     public Group(){ }

@@ -21,53 +21,6 @@ public final class AuthUtils {
     private final Logger log = LoggerFactory.getLogger(AuthUtils.class);
 
 
-    /**
-     * Basic firewall.
-     * Check if the user in session and if the timestamp token is always valid.
-     * @param session
-     * @throws UnAuthorizedException
-     */
-    public void firewall(HttpSession session) throws UnAuthorizedException {
-        if(null == session.getAttribute("user") || null == session.getAttribute("timestamp")){
-            throw new UnAuthorizedException();
-        }else{
-
-            Date dt = (Date) session.getAttribute("timestamp");
-
-            if(!this.checkTimestampAuthenticity(dt.getTime())){
-
-                throw new UnAuthorizedException();
-
-            }
-        }
-    }
-
-    /**
-     * Setup credentials for the current user.
-     * @param u
-     * @param session
-     */
-    public void bootstrapCredentials(User u, HttpSession session){
-        if(!u.equals(null)){
-            session.setAttribute("user", u);
-            session.setAttribute("timestamp", new Date());
-        }
-    }
-
-
-    private boolean checkTimestampAuthenticity(Long timestamp){
-        Boolean isValid = true;
-        long oneHour = System.currentTimeMillis() - ONE_HOURS;
-
-        // timestamp is older than one hour
-        if (timestamp < oneHour) {
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-
     public AuthUtils(){
 
     }
@@ -82,5 +35,56 @@ public final class AuthUtils {
         }
         return AuthUtils.instance;
     }
+
+    /**
+     * Basic firewall.
+     * Check if the user in session and if the timestamp token is always valid.
+     * @param session
+     * @throws UnAuthorizedException
+     */
+    public void firewall(HttpSession session) throws UnAuthorizedException {
+        if(null == session.getAttribute("user") || null == session.getAttribute("timestamp")){
+            throw new UnAuthorizedException();
+        }else{
+
+            Date dt = (Date) session.getAttribute("timestamp");
+
+            if(!this.checkTimestampAuthenticity(dt.getTime())){
+                throw new UnAuthorizedException();
+            }
+        }
+    }
+
+    /**
+     * Setup credentials for the current user.
+     * @param u
+     * @param session
+     */
+    public void bootstrapCredentials(User u, HttpSession session) {
+        if(!u.equals(null)){
+            session.setAttribute("user", u);
+            session.setAttribute("timestamp", new Date());
+        }
+    }
+
+
+    /**
+     * Verify if the timestamp in session is not outdated.
+     * An outdated timestamp is a timestamp which exceed one hour.
+     * @param timestamp
+     * @return
+     */
+    private boolean checkTimestampAuthenticity(Long timestamp) {
+        Boolean isValid = true;
+        long oneHour = System.currentTimeMillis() - ONE_HOURS;
+
+        // timestamp is older than one hour
+        if (timestamp < oneHour) {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
 
 }
