@@ -9,3 +9,4 @@ build/
 target/
 .DS_Store
 node_modules/
+src/main/webapp/bower_components/
