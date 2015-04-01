@@ -27,7 +27,6 @@ app.service('Auth', ['$http', '$cookieStore', 'Login', function ($http, $cookieS
     function validateUserAuthentification(cb){
         var promise = $http.get('http://localhost:9000/api/users')
             .success(function () {
-                console.log(arguments);
                 cb(arguments);
             })
             .error(function () {
@@ -53,13 +52,17 @@ app.service('Auth', ['$http', '$cookieStore', 'Login', function ($http, $cookieS
                         cb(true);
                         break;
                     case 401:
+                        $cookieStore.remove('currentUser');
                         cb(false);
                         break;
                     default:
+                        $cookieStore.remove('currentUser');
                         cb(false);
                         break
                 }
+
             });
+
         }else{
             cb(true);
         }
@@ -82,7 +85,19 @@ app.service('Auth', ['$http', '$cookieStore', 'Login', function ($http, $cookieS
         }
     }
 
+    /**
+     * Call the GET -> /api/logout method and remove the currentUser in cookies
+     * @param cb
+     */
+    function logout(cb){
+        $http.get('http://localhost:9000/api/logout').success(function () {
+            $cookieStore.remove('currentUser');
+            cb();
+        });
+    }
+
     return {
+        logout: logout,
         isAuth: isAuth,
         validate: validateUserAuthentification,
         authenticate: authenticate

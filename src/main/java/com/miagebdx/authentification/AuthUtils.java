@@ -43,6 +43,7 @@ public final class AuthUtils {
      * @throws UnAuthorizedException
      */
     public void firewall(HttpSession session) throws UnAuthorizedException {
+        log.info("Trying to go into firewall");
         if(null == session.getAttribute("user") || null == session.getAttribute("timestamp")){
             throw new UnAuthorizedException();
         }else{
@@ -67,6 +68,10 @@ public final class AuthUtils {
         }
     }
 
+    public void freeSession(HttpSession session){
+        session.setAttribute("user", null);
+        session.setAttribute("timestamp", null);
+    }
 
     /**
      * Verify if the timestamp in session is not outdated.

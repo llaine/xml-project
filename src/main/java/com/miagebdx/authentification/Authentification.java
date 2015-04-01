@@ -63,9 +63,25 @@ public class Authentification {
     @RequestMapping(value="/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<?> register(@ModelAttribute User u){
 
+        log.info("Trying to create a new user {} ", u);
+
         User user = userRepo.createUser(u);
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
 
+    }
+
+    /**
+     * GET -> /register : Register a user.
+     * @return
+     */
+    @RequestMapping(value="/logout", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<?> logout(HttpSession session){
+
+        log.info("Disconnecting current user");
+
+        authUtils.freeSession(session);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

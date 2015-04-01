@@ -8,10 +8,11 @@
 
 angular.module('ngContactManager', ['ngRoute', 'ngCookies', 'ngResource'])
     .run(['$rootScope', 'Auth', '$location', function($rootScope, Auth, $location) {
-        $rootScope.$on('$routeChangeSuccess', function () {
 
+        $rootScope.$on('$routeChangeSuccess', function () {
             /* Very basic verification of authentification */
             if($location.path() !== "/login" && $location.path() !== "/register"){
+
                 Auth.isAuth(function (isAuthent) {
                     if(!isAuthent){
                         $location.path('/login');
@@ -32,5 +33,8 @@ angular.module('ngContactManager', ['ngRoute', 'ngCookies', 'ngResource'])
         }).when('/register', {
             templateUrl: '/app/register/register.html',
             controller: 'registerController'
+        }).when('/logout', {
+            templateUrl: '/app/login/logout.html',
+            controller: 'logoutController'
         }).otherwise('/');
     }]);

@@ -7,10 +7,6 @@
 angular.module('ngContactManager')
     .controller('registerController', ['$scope', 'UsersResource', function($scope, UsersResource) {
 
-
-        UsersResource.get();
-
-
         $scope.register = function (user) {
             console.log(user);
         };
