@@ -6,6 +6,16 @@
 'use strict';
 
 angular.module('ngContactManager')
-    .controller('loginController', [function() {
+    .controller('loginController', ['$scope', 'Auth', '$location', function($scope, Auth, $location) {
+
+        $scope.connexion = function (user) {
+            Auth.authenticate(user, function (Ok) {
+                if(Ok){
+                    /* Redirect to home page */
+                    $location.path('/');
+                }
+            });
+        };
+
 
     }]);

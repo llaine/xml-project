@@ -6,14 +6,19 @@
 
 'use strict';
 
-angular.module('ngContactManager', ['ngRoute', 'ngCookies'])
+angular.module('ngContactManager', ['ngRoute', 'ngCookies', 'ngResource'])
     .run(['$rootScope', 'Auth', '$location', function($rootScope, Auth, $location) {
         $rootScope.$on('$routeChangeSuccess', function () {
-            Auth.validate().then(function (data) {
-                if(data === 401){
-                    alert('ok');
-                }
-            });
+
+            /* Very basic verification of authentification */
+            if($location.path() !== "/login" && $location.path() !== "/register"){
+                Auth.isAuth(function (isAuthent) {
+                    if(!isAuthent){
+                        $location.path('/login');
+                    }
+                });
+            }
+
         });
     }])
     /* Routing configuration */
@@ -23,7 +28,9 @@ angular.module('ngContactManager', ['ngRoute', 'ngCookies'])
             controller: 'homeController'
         }).when('/login', {
             templateUrl: '/app/login/login.html',
-            controller: 'loginController',
-            login: false
+            controller: 'loginController'
+        }).when('/register', {
+            templateUrl: '/app/register/register.html',
+            controller: 'registerController'
         }).otherwise('/');
     }]);

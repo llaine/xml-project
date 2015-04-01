@@ -11,10 +11,5 @@ app.factory('UsersResource', ['$resource', function ($resource) {
     /**
      * GET -> api/users
      */
-    return $resource('http://localhost:9001/api/users', {
-        list: {
-            method: 'GET',
-            isArray: true
-        }
-    })
+    return $resource('http://localhost:9001/api/users');
 }]);

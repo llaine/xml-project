@@ -66,9 +66,11 @@ public class UserRepository extends UserFactory {
         List<User> lesUsers = this.findAll();
         if(!lesUsers.isEmpty()){
             for(User userPersisted: lesUsers){
-                if(userPersisted.getFirstname().equals(username) && userPersisted.getPassword().equals(password)){
-                    log.info("Found {} ", userPersisted);
-                    return userPersisted;
+                if(null != userPersisted){
+                    if(userPersisted.getFirstname().equals(username) && userPersisted.getPassword().equals(password)){
+                        log.info("Found {} ", userPersisted);
+                        return userPersisted;
+                    }
                 }
             }
         }

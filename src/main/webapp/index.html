@@ -3,29 +3,51 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Contact manager</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/material.min.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/roboto.min.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css"/>
+
     <link rel="stylesheet" href="css/mixins.css"/>
-    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css"/>
+    <link rel="stylesheet" href="css/form.css"/>
+
 </head>
 <body>
+
+    <navigation-bar></navigation-bar>
+
+    <div class="container">
+        <div ng-view></div>
+    </div>
+
+
     <!-- Libraries script -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/modernizr/modernizr.js"></script>
-    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+
+    <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+
 
     <!-- Application scripts -->
     <script src="app/app.js"></script>
     <script src="app/home/home.js"></script>
+    <script src="app/register/register.js"></script>
     <script src="app/login/login.js"></script>
     <script src="app/components/directives/navigation-bar.js"></script>
     <script src="app/components/services/authentification.js"></script>
+    <script src="app/components/resources/users.js"></script>
+    <script src="app/components/resources/groups.js"></script>
 
-    <script src="//localhost:35729/livereload.js"></script>
-    <navigation-bar></navigation-bar>
-    <main>
-        <div ng-view></div>
-    </main>
+    <script>
+        $(document).ready(function() {
+            // This command is used to initialize some elements and make them work properly
+            $.material.init();
+        });
+    </script>
 </body>
 </html>

@@ -38,7 +38,6 @@ public class Authentification {
         // User is already connected.
         if(session.getAttribute("user") != null) return new ResponseEntity<>((User)session.getAttribute("user"), HttpStatus.OK);
 
-
         log.info("Connection tried with {} {}", username, password);
 
         User u = userRepo.findOneByUsername(username, password);
