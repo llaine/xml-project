@@ -7,11 +7,15 @@ import com.miagebdx.domain.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +28,7 @@ import java.util.Optional;
  * @package com.miagebdx.rest
  */
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class UserResource {
 
@@ -39,14 +43,16 @@ public class UserResource {
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/users")
-    public @ResponseBody ResponseEntity<List<User>> getUsers(HttpSession session){
+    public @ResponseBody ResponseEntity getUsers(HttpSession session){
         authUtils.firewall(session);
 
         log.debug("Getting Resource User");
 
-        return Optional.ofNullable(userRepo.findAll())
-                .map(users -> new ResponseEntity<>(users, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.OK));
+        List list = userRepo.findAll();
+
+        log.info("debug {}", list);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     /**

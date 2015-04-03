@@ -27,6 +27,10 @@ public class GroupFactory extends XMLHandler implements IFactory {
         return new Group(daoUtils.getRandomLong(), name);
     }
 
+    public Group createClass(String name, List member){
+        return new Group(daoUtils.getRandomLong(), name, member);
+    }
+
     /**
      * Load the current object
      * @return Object

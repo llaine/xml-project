@@ -21,6 +21,12 @@ public class Group implements IGroup {
         this.name = name;
     }
 
+    public Group(Long id, String name, List users) {
+        this.id = id;
+        this.name = name;
+        this.members = users;
+    }
+
     public Group(){ }
 
     public Long getId() {

@@ -11,5 +11,9 @@ app.factory('UsersResource', ['$resource', function ($resource) {
     /**
      * GET -> api/users
      */
-    return $resource('http://localhost:9000/api/users');
+    return $resource(
+        'http://localhost:9000/api/users/:id',
+        {id: '@id'},
+        {"update":{method:"PUT"}}
+    );
 }]);

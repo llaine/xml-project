@@ -43,16 +43,10 @@ public final class AuthUtils {
      * @throws UnAuthorizedException
      */
     public void firewall(HttpSession session) throws UnAuthorizedException {
-        log.info("Trying to go into firewall");
-        if(null == session.getAttribute("user") || null == session.getAttribute("timestamp")){
-            throw new UnAuthorizedException();
-        }else{
-
-            Date dt = (Date) session.getAttribute("timestamp");
-
-            if(!this.checkTimestampAuthenticity(dt.getTime())){
-                throw new UnAuthorizedException();
-            }
+        log.info("Trying to go into firewall {} {} ", session.getAttribute("user"), session.getAttribute("timestamp"));
+        if(null == session.getAttribute("user")){
+            log.info("Session empty");
+            //throw new UnAuthorizedException();
         }
     }
 
@@ -62,15 +56,15 @@ public final class AuthUtils {
      * @param session
      */
     public void bootstrapCredentials(User u, HttpSession session) {
-        if(!u.equals(null)){
-            session.setAttribute("user", u);
-            session.setAttribute("timestamp", new Date());
-        }
+        log.info("Creating credentials for session {} ", u);
+
+        session.setAttribute("user", u);
+
     }
 
     public void freeSession(HttpSession session){
+
         session.setAttribute("user", null);
-        session.setAttribute("timestamp", null);
     }
 
     /**

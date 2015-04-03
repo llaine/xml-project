@@ -22,14 +22,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
-
-
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
+        //auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
     }
-
 }
