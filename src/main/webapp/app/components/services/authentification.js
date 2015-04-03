@@ -90,17 +90,23 @@ app.service('Auth', ['$http', '$cookieStore', 'Login', function ($http, $cookieS
      * @param cb
      */
     function logout(cb){
+        $cookieStore.remove('currentUser');
         $http.get('http://localhost:9000/api/logout').success(function () {
-            $cookieStore.remove('currentUser');
             cb();
         });
+    }
+
+
+    function currentUser(){
+        return $cookieStore.get('currentUser');
     }
 
     return {
         logout: logout,
         isAuth: isAuth,
         validate: validateUserAuthentification,
-        authenticate: authenticate
+        authenticate: authenticate,
+        currentUser:currentUser
     }
 
 }]);

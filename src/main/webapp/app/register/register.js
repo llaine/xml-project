@@ -9,6 +9,7 @@ angular.module('ngContactManager')
 
         $scope.register = function (user) {
             console.log(user);
+            // TODO REST API
         };
 
     }]);

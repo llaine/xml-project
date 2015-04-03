@@ -12,7 +12,11 @@ app.controller('loginController', ['$scope', 'Auth', '$location', function($scop
         Auth.authenticate(user, function (Ok) {
             if(Ok){
                 /* Redirect to home page */
+                location.reload();
                 $location.path('/');
+            }else{
+                // TODO FIX
+                $('#errors').html('The username or password does not exists!');
             }
         });
     };
@@ -24,6 +28,7 @@ app.controller('logoutController', ['$location', '$cookieStore', 'Auth', functio
 
     Auth.logout(function () {
         /* We are well disconnected ! */
+        location.reload();
         $location.path('/connexion');
     });
 

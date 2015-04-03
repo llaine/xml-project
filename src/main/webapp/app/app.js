@@ -36,5 +36,14 @@ angular.module('ngContactManager', ['ngRoute', 'ngCookies', 'ngResource'])
         }).when('/logout', {
             templateUrl: '/app/login/logout.html',
             controller: 'logoutController'
+        }).when('/profile', {
+            templateUrl: '/app/profile/profile.html',
+            controller: 'profileController'
+        }).when('/friends', {
+            templateUrl: '/app/actions/friends.html',
+            controller: 'friendsController'
+        }).when('/groups', {
+            templateUrl: '/app/actions/groups.html',
+            controller: 'groupsController'
         }).otherwise('/');
     }]);

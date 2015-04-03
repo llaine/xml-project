@@ -6,9 +6,6 @@
 
 var app = angular.module('ngContactManager');
 
-app.controller('homeController', ['UsersResource', function (UsersResource) {
-
-
-
+app.controller('homeController', ['$scope', function ($scope) {
 
 }]);
