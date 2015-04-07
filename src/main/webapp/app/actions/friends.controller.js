@@ -6,7 +6,7 @@
 
 var app = angular.module('ngContactManager');
 
-app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',  function ($scope, Auth, $http, UsersResource) {
+app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource', 'flashMessage',  function ($scope, Auth, $http, UsersResource, flashMessage) {
     $scope.newUser = {firstname: null, lastname: null, birthdayDate: null, email: null, password: null, friends: null, groups: null};
 
     $scope.currentUser = Auth.currentUser();
@@ -25,8 +25,10 @@ app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',
 
     function h(data, status) {
         if(status === 200){
-            console.log(arguments);
+            flashMessage.success("Action well perfomerd ! ");
             reset();
+        }else{
+            flashMessage.error("Something wen\'t wrong, please try later. " + status);
         }
     }
 
@@ -49,11 +51,6 @@ app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',
 
         }
     };
-
-    $scope.updateUser = function () {
-
-    };
-
 
     $scope.removeContact = function (contact) {
         // Removing from the Array

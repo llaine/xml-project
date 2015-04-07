@@ -46,6 +46,7 @@ public final class AuthUtils {
         log.info("Trying to go into firewall");
 
         if(null == session.getAttribute("user")){
+            log.info("UnAuthorized access");
             //throw new UnAuthorizedException();
         }
 

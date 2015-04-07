@@ -31,6 +31,8 @@ public class UserRepository extends UserFactory {
 
     /**
      * Save a specific object to the "database".
+     * Means that we are going to create a file on disk where all the informations are going to be
+     * serialized.
      * @param u
      */
     public void save(User u) {
@@ -61,7 +63,7 @@ public class UserRepository extends UserFactory {
     }
 
     /**
-     *
+     * Check if the username already exists in the database.
      * @param username
      * @return
      */
@@ -81,13 +83,16 @@ public class UserRepository extends UserFactory {
     }
 
     /**
-     *
+     * Find one user by name && password.
      * @param username
      * @param password
+     * @throws RuntimeException
      * @return
      */
-    public User findOneByUsername(String username, String password){
+    public User findOneByUsername(String username, String password) throws RuntimeException {
         log.info("Finding one user by username: {} & password: {}", username, password);
+
+        if(username == null || password == null) throw new MissingParametersException();
 
         List<User> lesUsers = this.findAll();
         if(!lesUsers.isEmpty()){
@@ -105,9 +110,10 @@ public class UserRepository extends UserFactory {
     }
 
     /**
-     * Saving a user
+     * Create a user persist it and return it.
      * @param u
-     * @return
+     * @return User
+     * @throws MissingParametersException
      */
     public User createUser(User u) throws MissingParametersException {
         if(userUtils.isValidUser(u)){
@@ -125,10 +131,10 @@ public class UserRepository extends UserFactory {
     }
 
     /**
-     * Update a user.
-     * Verify if user's fields are valid.
+     * Update a specific user with all the new user passed in param.
      * @param id
-     * @return
+     * @param user
+     * @throws RuntimeException
      */
     public void updateUser(Long id, User user) throws RuntimeException {
          /* Only three fields are needed to an User object to be valid.  */
@@ -147,7 +153,7 @@ public class UserRepository extends UserFactory {
     }
 
     /**
-     * Add a new user onto HashMap of the User how correspond to the user id.
+     * Add a friend object into user friends list.
      * @param id
      * @param user
      * @throws RuntimeException
@@ -173,11 +179,12 @@ public class UserRepository extends UserFactory {
     }
 
     /**
-     * Add user to group.
+     * Add a group in grooup lists of a useR.
      * @param id
      * @param group
+     * @throws RuntimeException
      */
-    public void addGroup(Long id, Group group) {
+    public void addGroup(Long id, Group group) throws RuntimeException {
         log.info("Adding a new group {} for {} ", id, group);
 
         User u = (User) this.load(id);
@@ -199,12 +206,13 @@ public class UserRepository extends UserFactory {
 
 
     /**
-     * Add a contact to a specific group.
+     * Add a contact to a group.
      * @param idUser
      * @param idGroup
      * @param idContact
+     * @throws RuntimeException
      */
-    public void addUserToGroup(Long idUser, Long idGroup, Long idContact) {
+    public void addUserToGroup(Long idUser, Long idGroup, Long idContact) throws RuntimeException {
         log.info("Adding a new user {} to group {} from {}", idContact, idGroup, idUser);
 
         User user = null;
@@ -249,12 +257,13 @@ public class UserRepository extends UserFactory {
 
 
     /**
-     * Remove a specific user of a specific group
+     * Remove a specific user from a specific group.
      * @param idUser
      * @param idGroup
      * @param idContact
+     * @throws RuntimeException
      */
-    public void removeUserFromGroup(Long idUser, Long idGroup, Long idContact) {
+    public void removeUserFromGroup(Long idUser, Long idGroup, Long idContact) throws RuntimeException {
 
         User user = null;
         try {
@@ -289,7 +298,13 @@ public class UserRepository extends UserFactory {
 
     }
 
-    public void removeGroup(Long idUser, Long idGroup) {
+    /**
+     * Remove a group from user groups list.
+     * @param idUser
+     * @param idGroup
+     * @throws RuntimeException
+     */
+    public void removeGroup(Long idUser, Long idGroup) throws RuntimeException {
         log.info("Remove group {} ", idGroup, idUser);
 
         // Fetching the user in database.
@@ -310,11 +325,12 @@ public class UserRepository extends UserFactory {
     }
 
     /**
-     * Remove a contact from user's contact list.
+     * Remove a contact from user contacts list.
      * @param idUser
      * @param idFriend
+     * @throws RuntimeException
      */
-    public void removeFriend(Long idUser, Long idFriend){
+    public void removeFriend(Long idUser, Long idFriend) throws RuntimeException {
         log.info("Removing friend {} from user's list {} ", idFriend, idUser);
         User user = (User) this.load(idUser);
 
@@ -339,7 +355,7 @@ public class UserRepository extends UserFactory {
      * @param idContact
      * @return
      */
-    public List getDependenciesForUser(Long idUser, Long idContact){
+    public List getDependenciesForUser(Long idUser, Long idContact) throws RuntimeException {
         List<Group> groupsWhereUserIsIn = new ArrayList<>();
 
         User user = (User) this.load(idUser);
@@ -351,6 +367,7 @@ public class UserRepository extends UserFactory {
         for(Group g : user.getGroups()) {
 
             if(g.getMembers() != null){
+                /* get all the members of the group and find if the user is in the group. */
                 List members = g.getMembers()
                         .stream()
                         .filter(u -> u.getId().equals(idContact))
@@ -365,6 +382,10 @@ public class UserRepository extends UserFactory {
         return groupsWhereUserIsIn;
     }
 
+    /**
+     * Genereate a random Long.
+     * @return
+     */
     public Long getRandomLong(){
         long LOWER_RANGE = 0;
         long UPPER_RANGE = 1000000;

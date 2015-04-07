@@ -45,7 +45,7 @@ angular.module('ngContactManager')
                         $location.path('/login');
                     }
                 }).error(function (status) {
-
+                    flashMessage.error("Somethings wen\'t wrong " + status);
                 });
             }
 

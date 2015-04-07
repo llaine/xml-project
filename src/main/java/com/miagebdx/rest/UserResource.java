@@ -80,7 +80,9 @@ public class UserResource {
 
 
     /**
-     *
+     * Add a contact to group.
+     * This group should already exists!
+     * PUT -> /users/:id/groups/:id/friends/:id
      * @param idUser
      * @param idGroup
      * @param idContact
@@ -97,6 +99,14 @@ public class UserResource {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Add a contact to current user's friend list.
+     * POST -> /users/:id/friends
+     *
+     * @param user
+     * @param id
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/users/{id}/friends")
@@ -109,7 +119,8 @@ public class UserResource {
     }
 
     /**
-     *
+     * DELETE -> /users/:id/friends/:id
+     * Delete a friend from current user friends list.
      * @param idUser
      * @param idContact
      * @return
@@ -126,7 +137,8 @@ public class UserResource {
     }
 
     /**
-     *
+     * DELETE -> /users/:id/groups/:id/friends/:id
+     * Remove a friend from a specific group for the current user.
      * @param idUser
      * @param idGroup
      * @param idContact
@@ -144,6 +156,10 @@ public class UserResource {
     }
 
     /**
+     * GET -> / users/:id/dependencies/:idContact
+     *
+     * Get the "dependencies" for a specific contact means that,
+     * we wants to see every group where the contact is.
      *
      * @param idUser
      * @return
@@ -160,9 +176,13 @@ public class UserResource {
     }
 
 
-
     /**
+     * DELETE -> /users/:id/groups/:id
      *
+     * Delete a specific group for a user in param.
+     *
+     * @param idUser
+     * @param idGroup
      * @return
      */
     @RequestMapping(method = RequestMethod.DELETE,
@@ -223,6 +243,8 @@ public class UserResource {
     /**
      * POST -> /users/:id/groups : Create a new group
      * @param id
+     * @param g
+     * @param session
      * @return
      */
     @RequestMapping(method = RequestMethod.POST,

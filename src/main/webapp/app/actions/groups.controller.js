@@ -6,7 +6,7 @@
 
 var app = angular.module('ngContactManager');
 
-app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope, Auth, $http) {
+app.controller('groupsController', ['$scope', 'Auth', '$http', 'flashMessage', function ($scope, Auth, $http, flashMessage) {
     $scope.newGroup = {name: null, members:null};
     function reset(){
         $scope.newGroup = {name: null, members:null};
@@ -18,7 +18,10 @@ app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope,
 
     function h(data, status) {
         if(status === 200){
-            console.log(arguments);
+            flashMessage.success("Everything fine!");
+            reset();
+        }else{
+            flashMessage.error("Something wen\'t wrong, please try later. " + status);
         }
     };
 

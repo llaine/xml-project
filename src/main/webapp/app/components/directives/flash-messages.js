@@ -21,9 +21,10 @@ app.service('flashMessage', [function () {
         if(msg && rootDiv){
             rootDiv
                 .removeClass('alert-success')
+                .removeClass('alert-warning')
                 .removeClass('hidden')
                 .addClass("alert-success")
-                .html('<h1>' + msg + '</h1>')
+                .html('<h3>' + msg + '</h3>')
                 .delay(delayFade)
                 .fadeOut(delayFadeOut);
         }
@@ -36,10 +37,11 @@ app.service('flashMessage', [function () {
     function error(msg){
         if(msg && rootDiv){
             rootDiv
+                .removeClass('alert-success')
                 .removeClass('alert-warning')
                 .removeClass('hidden')
                 .addClass("alert-warning")
-                .html('<h1>' + msg + '</h1>')
+                .html('<h2>' + msg + '</h2>')
                 .delay(delayFade)
                 .fadeOut(delayFadeOut);
         }
