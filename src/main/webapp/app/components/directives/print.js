@@ -7,7 +7,24 @@
 
 var app = angular.module('ngContactManager');
 
+/**
+ * Print the whole page.
+ * First version embed the ability to only print a specific div,
+ * but the result was messy.
+ *
+ * Looks like this :
 
+ var printContents = document.getElementById(divName).innerHTML;
+ var originalContents = document.body.innerHTML;
+
+ document.body.innerHTML = printContents;
+
+ window.print();
+
+ document.body.innerHTML = originalContents;
+
+ * @param divName
+ */
 function printDiv(divName){
     window.print();
 }

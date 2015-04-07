@@ -18,38 +18,40 @@
         <div class="pull-right">
             <input type="text" class="form-control" ng-model="query" placeholder="Search for contact"/>
         </div>
-        <table class="table" id="groupsTable">
-            <h1>Groups</h1>
-            <thead>
+        <div class="table-responsive">
+            <table class="table" id="groupsTable">
+                <h1>Groups</h1>
+                <thead>
                 <tr>
                     <th>Name</th>
                     <th>Members</th>
                     <th colspan="2"></th>
                 </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="group in currentUser.groups | filter:query">
-                <td>{{ group.name }}</td>
-                <td>
-                    <table class="table">
-                        <tbody>
+                </thead>
+                <tbody>
+                <tr ng-repeat="group in currentUser.groups | filter:query">
+                    <td>{{ group.name }}</td>
+                    <td>
+                        <table class="table">
+                            <tbody>
                             <tr ng-repeat="member in group.members">
                                 <td>{{member.firstname}}</td>
                                 <td>{{member.lastname}}</td>
                                 <td> <span ng-click="removeFromGroup(member, group)" class="glyphicon glyphicon-remove"></span> </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td class="no-print">
-                    <select ng-model="contact" ng-options="friend.id as friend.firstname for friend in currentUser.friends"></select>
-                    <button class="btn btn-sm btn-info" ng-click="addMember(contact, group.id)">Add members</button>
-                </td>
-                <td class="no-print">
-                    <button class="btn btn-sm btn-warning" ng-click="deleteGroup(group)">Delete group</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="no-print">
+                        <select ng-model="contact" ng-options="friend.id as friend.firstname for friend in currentUser.friends"></select>
+                        <button class="btn btn-sm btn-info" ng-click="addMember(contact, group.id)">Add members</button>
+                    </td>
+                    <td class="no-print">
+                        <button class="btn btn-sm btn-warning" ng-click="deleteGroup(group)">Delete group</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

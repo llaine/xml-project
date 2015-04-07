@@ -16,6 +16,7 @@
 <body>
 
     <navigation-bar></navigation-bar>
+    <div id="flashMessages" class="alert hidden" role="alert"></div>
 
     <div class="container">
         <div ng-view></div>
@@ -49,6 +50,7 @@
     <script src="app/components/resources/users.js"></script>
     <script src="app/components/resources/groups.js"></script>
     <script src="app/components/directives/print.js"></script>
+    <script src="app/components/directives/flash-messages.js"></script>
 
     <script>
         $(document).ready(function() {

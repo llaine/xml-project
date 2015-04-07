@@ -6,16 +6,17 @@
 'use strict';
 
 var app = angular.module('ngContactManager');
-app.controller('loginController', ['$scope', 'Auth', '$location', function($scope, Auth, $location) {
+app.controller('loginController', ['$scope', 'Auth', '$location', 'flashMessage', function($scope, Auth, $location, flashMessage) {
 
     $scope.connexion = function (user) {
+        if(!user) flashMessage.error("Please fill the form");
+
         Auth.authenticate(user, function (Ok) {
             if(Ok){
                 /* Redirect to home page */
                 location.reload();
                 $location.path('/');
             }else{
-                // TODO FIX
                 $('#errors').html('The username or password does not exists!');
             }
         });

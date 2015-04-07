@@ -75,12 +75,14 @@ app.service('Auth', ['$http', '$cookieStore', 'Login', 'UsersResource', function
      */
     function authenticate(user, cb){
         if(user && user.username && user.password){
-            Login.authenticate($.param({username: user.username, password: user.password}), function (data) {
+            Login.authenticate($.param({username: user.username, password: user.password}), function (data, status) {
+                console.log(status);
                 /* Response is OK, we can store the user in cookies */
                 if(data && data.firstname && data.lastname){
                     $cookieStore.put("currentUser", data);
                     cb(true);
                 }
+
             });
         }
     }

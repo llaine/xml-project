@@ -32,8 +32,9 @@
             <input type="text" class="form-control" ng-model="query" placeholder="Search for contact"/>
         </div>
         <h1>Contact</h1>
-        <table class="table" id="contactTable">
-            <thead>
+        <div class="table-responsive">
+            <table class="table" id="contactTable">
+                <thead>
                 <tr>
                     <th>Firstname</th>
                     <th>Lastname</th>
@@ -41,8 +42,8 @@
                     <th>Birthday date</th>
                     <th colspan="1"></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr ng-repeat="contact in currentUser.friends | filter:query">
                     <td>{{ contact.firstname }}</td>
                     <td>{{ contact.lastname }}</td>
@@ -51,7 +52,8 @@
                     <td class="no-print"><a href="#/link/{{ contact.id }}">Dependencies</a> </td>
                     <td class="no-print"><button class="btn btn-sm btn-warning" ng-click="removeContact(contact)">Remove</button></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

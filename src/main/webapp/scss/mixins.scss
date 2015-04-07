@@ -24,6 +24,13 @@ main {
   margin-top: 3%;
 }
 
+div {
+  &.alert {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
 
 div {
   &.navbar {
