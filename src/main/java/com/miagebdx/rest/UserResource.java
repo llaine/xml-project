@@ -74,13 +74,26 @@ public class UserResource {
 
 
     /**
-     * Add a friend
-     * @param user
+     *
+     * @param idUser
+     * @param idGroup
+     * @param idContact
      * @return
      */
+    @RequestMapping(method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{idUser}/groups/{idGroup}/friends/{idContact}")
+    public @ResponseBody ResponseEntity<?> addContactToGroup(@PathVariable Long idUser, @PathVariable Long idGroup, @PathVariable Long idContact) {
+        log.info("Adding friend {} to group {} ", idContact, idGroup);
+
+        userRepo.addUserToGroup(idUser, idGroup, idContact);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
-            value = "/users/{id}")
+            value = "/users/{id}/friends")
     public @ResponseBody ResponseEntity<?> addFriend(@RequestBody User user, @PathVariable Long id) {
         log.info("Adding friend to the current user");
 
@@ -102,6 +115,56 @@ public class UserResource {
         log.info("Removing friend from user's list.");
 
         userRepo.removeFriend(idUser, idContact);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param idUser
+     * @param idGroup
+     * @param idContact
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{idUser}/groups/{idGroup}/friends/{idContact}")
+    public @ResponseBody ResponseEntity<?> removeFriendFromGroup(@PathVariable Long idUser, @PathVariable Long idGroup, @PathVariable Long idContact) {
+        log.info("Removing friend from user's list.");
+
+        userRepo.removeUserFromGroup(idUser, idGroup, idContact);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param idUser
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{idUser}/dependencies")
+    public @ResponseBody ResponseEntity<?> getDependeciesForUser(@PathVariable Long idUser) {
+        log.info("Removing friend from user's list.");
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{idUser}/groups/{idGroup}")
+    public @ResponseBody ResponseEntity removeGroup(@PathVariable Long idUser, @PathVariable Long idGroup) {
+        log.info("Remove group");
+
+        userRepo.removeGroup(idUser, idGroup);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -139,7 +202,7 @@ public class UserResource {
     @RequestMapping(method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/users/{id}")
-    public @ResponseBody ResponseEntity<?> updateUser(@PathVariable Long id, @ModelAttribute User user, HttpSession session) {
+    public @ResponseBody ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user, HttpSession session) {
         authUtils.firewall(session);
 
         log.debug("REST Update User : {}", id);
@@ -158,35 +221,15 @@ public class UserResource {
     @RequestMapping(method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/users/{id}/groups")
-    public @ResponseBody ResponseEntity<?> createGroupForUser(@PathVariable Long id, @ModelAttribute Group g, HttpSession session) {
+    public @ResponseBody ResponseEntity<?> createGroupForUser(@PathVariable Long id, @RequestBody Group g, HttpSession session) {
         authUtils.firewall(session);
 
-        log.debug("REST request to User : {}", id);
+        log.debug("REST request to create a group : {}", g);
 
         userRepo.addGroup(id, g);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /**
-     *
-     * @param idUser
-     * @param idGroup
-     * @param user
-     * @param session
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            value = "/users/{id}/groups/{id}")
-    public @ResponseBody ResponseEntity<?> addingFriendToGroup(@PathVariable Long idUser, @PathVariable Long idGroup, @ModelAttribute User user, HttpSession session) {
-        authUtils.firewall(session);
-
-        log.debug("REST request to User : {}", idGroup);
-
-        userRepo.addUserToGroup(idUser, idGroup, user);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
 }

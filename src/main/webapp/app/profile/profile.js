@@ -12,17 +12,15 @@ app.controller('profileController', ['$scope', '$http', 'UsersResource', 'Auth',
 
 
     $scope.update = function () {
-        console.log($scope.user);
 
         function handleResponse(){
             console.log(arguments);
         }
 
-        // TODO REST API
         $http({
             method:'PUT',
-            url:"http://localhost:9000/api/users/1",
-            data: {user:$scope.user}
+            url:"http://localhost:9000/api/users/" + $scope.user.id,
+            data: $scope.user
         }).success(handleResponse).error(handleResponse);
     };
     

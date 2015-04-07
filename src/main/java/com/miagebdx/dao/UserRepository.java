@@ -10,9 +10,12 @@ import com.miagebdx.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -149,6 +152,11 @@ public class UserRepository extends UserFactory {
         this.save(u);
     }
 
+    /**
+     * Add user to group.
+     * @param id
+     * @param group
+     */
     public void addGroup(Long id, Group group) {
         log.info("Adding a new group {} for {} ", id, group);
 
@@ -169,15 +177,35 @@ public class UserRepository extends UserFactory {
         this.save(u);
     }
 
-    public void addUserToGroup(Long idUser, Long idGroup, User u) {
-        log.info("Adding a new user {} to group {} from {}", u, idGroup, idUser);
 
-        // Fetching the user in database.
-        User user = (User) this.load(idUser);
+    /**
+     * Add a contact to a specific group.
+     * @param idUser
+     * @param idGroup
+     * @param idContact
+     */
+    public void addUserToGroup(Long idUser, Long idGroup, Long idContact) {
+        log.info("Adding a new user {} to group {} from {}", idContact, idGroup, idUser);
 
-        if(u == null) throw new NotFoundException();
+        User user = null;
+        User contact = null;
 
-        if(idUser == null || idGroup == null) throw new MissingParametersException();
+        try {
+            // Fetching the user in database.
+            user = (User) this.load(idUser);
+            // Fetching the friend in user's friend list.
+            contact = user.getFriends()
+                    .stream()
+                    .filter(f -> f.getId().equals(idContact))
+                    .findAny().get();
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        if(user == null || contact == null) throw new NotFoundException();
+        if(idUser == null || idGroup == null || idContact == null) throw new MissingParametersException();
+
 
         // Getting all the group of the user.
         List<Group> groupsFromUser = user.getGroups();
@@ -185,14 +213,87 @@ public class UserRepository extends UserFactory {
         if(groupsFromUser != null) {
             for(Group g : groupsFromUser) {
                 if(g.getId().equals(idGroup)) {
-                    g.addMember(user);
+
+                    g.addMember(contact);
+
+                    user.setGroups(groupsFromUser);
+
+                    this.save(user);
+
                     break;
+
                 }
             }
         }
+    }
+
+
+    /**
+     * Remove a specific user of a specific group
+     * @param idUser
+     * @param idGroup
+     * @param idContact
+     */
+    public void removeUserFromGroup(Long idUser, Long idGroup, Long idContact) {
+
+        User user = null;
+        try {
+
+            user = (User) this.load(idUser);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        if(user == null) throw new NotFoundException();
+        if(idGroup == null || idContact == null) throw new MissingParametersException();
+
+        // Getting the group
+        Group group = user.getGroups()
+                .stream()
+                .filter(g -> g.getId().equals(idGroup))
+                .findAny()
+                .get();  // Getting the right group
+
+        // Getting the index to update
+        int indexOfGroup = user.getGroups().indexOf(group);
+
+        // Removing the user from the group.
+        group.setMembers(group.getMembers().parallelStream().filter(u -> !u.getId().equals(idContact)).collect(Collectors.toCollection(ArrayList::new)));
+
+        // Updating
+        user.getGroups().set(indexOfGroup, group);
+
+        // Flushing
+        this.save(user);
 
     }
 
+    public void removeGroup(Long idUser, Long idGroup) {
+        log.info("Remove group {} ", idGroup, idUser);
+
+        // Fetching the user in database.
+        User user = (User) this.load(idUser);
+
+        if(user == null) throw new NotFoundException();
+
+        if(idUser == null || idGroup == null) throw new MissingParametersException();
+
+        ArrayList<Group> groups = user.getGroups()
+                .stream()
+                .filter(g -> !g.getId().equals(idGroup))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        user.setGroups(groups);
+
+        this.save(user);
+    }
+
+    /**
+     * Remove a contact from user's contact list.
+     * @param idUser
+     * @param idFriend
+     */
     public void removeFriend(Long idUser, Long idFriend){
         log.info("Removing friend {} from user's list {} ", idFriend, idUser);
         User user = (User) this.load(idUser);

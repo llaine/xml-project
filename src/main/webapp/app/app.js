@@ -45,5 +45,8 @@ angular.module('ngContactManager', ['ngRoute', 'ngCookies', 'ngResource'])
         }).when('/groups', {
             templateUrl: '/app/actions/groups.html',
             controller: 'groupsController'
+        }).when('/link/:user', {
+            templateUrl: '/app/actions/dependency.html',
+            controller: 'dependencyController'
         }).otherwise('/');
     }]);

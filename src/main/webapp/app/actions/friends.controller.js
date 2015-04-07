@@ -7,7 +7,7 @@
 var app = angular.module('ngContactManager');
 
 app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',  function ($scope, Auth, $http, UsersResource) {
-    $scope.newUser = $scope.newUser = {firstname: null, lastname: null, birthdayDate: null, email: null, password: null, friends: null, groups: null};
+    $scope.newUser = {firstname: null, lastname: null, birthdayDate: null, email: null, password: null, friends: null, groups: null};
 
     $scope.currentUser = Auth.currentUser();
 
@@ -39,10 +39,12 @@ app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',
 
             $scope.currentUser.friends.push(newUser);
 
-            UsersResource.addContact({id:$scope.currentUser.id}, newUser, function () {
-                console.log(arguments);
-                reset();
-            });
+
+            $http({
+                url:'http://localhost:9000/api/users/' + $scope.currentUser.id + '/friends',
+                method:'POST',
+                data:newUser
+            }).success(h).error(h);
 
         }
     };

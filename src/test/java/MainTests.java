@@ -22,7 +22,7 @@ public class MainTests {
 
         GroupRepository groupRepo = new GroupRepository();
 
-        User u = userRepo.findOneByUsername("toto", "password");
+        User u = userRepo.findOneByUsername("nom0", "password0");
 
 
         /*

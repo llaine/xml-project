@@ -2,6 +2,7 @@ package com.miagebdx.domain;
 
 import com.miagebdx.interfaces.IGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public class Group implements IGroup {
     public Group(Long id, String name) {
         this.id = id;
         this.name = name;
+        this.members = new ArrayList<>();
     }
 
     public Group(){ }
@@ -54,6 +56,10 @@ public class Group implements IGroup {
 
 
     public void addMember(User u) {
+        if(this.members == null){
+            this.members = new ArrayList<>();
+        }
+
         this.members.add(u);
     }
 

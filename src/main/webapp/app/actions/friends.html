@@ -19,14 +19,13 @@
                     <label for="birthday">Birthday date</label>
                     <input type="text" class="form-control" ng-model="newUser.birthdayDate" id="birthday" placeholder="19/08/1993">
                 </div>
-                <button ng-click="addContact(newUser)" type="submit" class="btn btn-success">Add invitation</button>
+                <button ng-click="addContact(newUser)" type="submit" class="btn btn-success btn-sm">Add</button>
             </form>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <input type="text" ng-model="query"/>
     <div class="col-md-12">
         <h1>Contact</h1>
         <table class="table">
@@ -36,7 +35,7 @@
                     <th>Lastname</th>
                     <th>Email</th>
                     <th>Birthday date</th>
-                    <th colspan="2"></th>
+                    <th colspan="1"></th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +44,7 @@
                     <td>{{ contact.lastname }}</td>
                     <td>{{ contact.email }}</td>
                     <td>{{ contact.birthdayDate }}</td>
-                    <td><button class="btn btn-sm btn-info" ng-click="updateUser(contact)">Update</button></td>
+                    <td><a href="#/link/{{ contact.id }}">Dependencies</a> </td>
                     <td><button class="btn btn-sm btn-warning" ng-click="removeContact(contact)">Remove</button></td>
                 </tr>
             </tbody>
