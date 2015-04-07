@@ -1,4 +1,4 @@
-package com.miagebdx.interfaces;
+package com.miagebdx.factory;
 
 
 /**

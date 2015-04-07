@@ -13,6 +13,12 @@ app.factory('UsersResource', ['$resource', function ($resource) {
      */
     return $resource('http://localhost:9000/api/users/:id',
         {id: '@id'},
+        {
+            addContact: {
+                id:'@id',
+                method: 'POST'
+            }
+        },
         {"update":{method:"PUT"}},
         {'save':{method:"POST"}}
     );

@@ -6,9 +6,14 @@
 
 var app = angular.module('ngContactManager');
 
-app.controller('groupsController', ['$scope', 'UsersResource', function ($scope, UsersResource) {
+app.controller('groupsController', ['$scope', 'Auth', function ($scope, Auth) {
 
-    $scope.friends = UsersResource.query();
+    $scope.currentUser = Auth.currentUser();
+
+
+    $scope.createGroup = function (newGroup) {
+
+    };
 
 
 

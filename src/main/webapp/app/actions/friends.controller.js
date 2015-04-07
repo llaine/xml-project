@@ -6,10 +6,11 @@
 
 var app = angular.module('ngContactManager');
 
-app.controller('friendsController', ['$scope', 'UsersResource', 'Auth',  function ($scope, UsersResource, Auth) {
+app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',  function ($scope, Auth, $http, UsersResource) {
     $scope.newUser = $scope.newUser = {firstname: null, lastname: null, birthdayDate: null, email: null, password: null, friends: null, groups: null};
 
     $scope.currentUser = Auth.currentUser();
+
 
     function reset(){
         $scope.newUser = {
@@ -23,6 +24,11 @@ app.controller('friendsController', ['$scope', 'UsersResource', 'Auth',  functio
         }
     }
 
+    function h(){
+        console.log(arguments);
+    }
+
+
     $scope.addContact = function (newUser) {
 
         if(newUser
@@ -33,10 +39,27 @@ app.controller('friendsController', ['$scope', 'UsersResource', 'Auth',  functio
 
             $scope.currentUser.friends.push(newUser);
 
-            // TODO REST API
+            UsersResource.addContact({id:$scope.currentUser.id}, newUser, function () {
+                console.log(arguments);
+                reset();
+            });
 
-            reset();
         }
+    };
+
+    $scope.updateUser = function () {
+
+    };
+
+
+    $scope.removeContact = function (contact) {
+        // Removing from the Array
+        $scope.currentUser.friends.splice($scope.currentUser.friends.indexOf(contact), 1);
+
+        $http({
+            method:'DELETE',
+            url:'http://localhost:9000/api/users/' + $scope.currentUser.id + '/friends/' + contact.id
+        }).success(h).error(h);
     };
 
 

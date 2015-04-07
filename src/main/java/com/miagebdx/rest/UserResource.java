@@ -3,6 +3,7 @@ package com.miagebdx.rest;
 
 import com.miagebdx.authentification.AuthUtils;
 import com.miagebdx.dao.UserRepository;
+import com.miagebdx.domain.Group;
 import com.miagebdx.domain.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +53,7 @@ public class UserResource {
     }
 
     /**
-     * POST -> /users : Create a specific User
+     * POST -> /users : Create a specific User.
      * @return
      */
     @RequestMapping(method = RequestMethod.POST,
@@ -68,6 +71,43 @@ public class UserResource {
                 HttpStatus.OK
         );
     }
+
+
+    /**
+     * Add a friend
+     * @param user
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{id}")
+    public @ResponseBody ResponseEntity<?> addFriend(@RequestBody User user, @PathVariable Long id) {
+        log.info("Adding friend to the current user");
+
+        userRepo.addFriend(id, user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param idUser
+     * @param idContact
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{idUser}/friends/{idContact}")
+    public @ResponseBody ResponseEntity<?> removeFriend(@PathVariable Long idUser, @PathVariable Long idContact) {
+        log.info("Removing friend from user's list.");
+
+        userRepo.removeFriend(idUser, idContact);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
 
     /**
      * GET -> /users/:id : Get a specific user
@@ -108,6 +148,45 @@ public class UserResource {
 
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    /**
+     * POST -> /users/:id/groups : Create a new group
+     * @param id
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{id}/groups")
+    public @ResponseBody ResponseEntity<?> createGroupForUser(@PathVariable Long id, @ModelAttribute Group g, HttpSession session) {
+        authUtils.firewall(session);
+
+        log.debug("REST request to User : {}", id);
+
+        userRepo.addGroup(id, g);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param idUser
+     * @param idGroup
+     * @param user
+     * @param session
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/users/{id}/groups/{id}")
+    public @ResponseBody ResponseEntity<?> addingFriendToGroup(@PathVariable Long idUser, @PathVariable Long idGroup, @ModelAttribute User user, HttpSession session) {
+        authUtils.firewall(session);
+
+        log.debug("REST request to User : {}", idGroup);
+
+        userRepo.addUserToGroup(idUser, idGroup, user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

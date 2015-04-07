@@ -52,6 +52,11 @@ public class Group implements IGroup {
         //TODO
     }
 
+
+    public void addMember(User u) {
+        this.members.add(u);
+    }
+
     @Override
     public String getUniqueFileName(){
         return "group-" + this.getId() + ".xml";

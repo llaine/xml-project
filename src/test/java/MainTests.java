@@ -6,6 +6,7 @@ import com.miagebdx.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * projetXML
@@ -18,7 +19,10 @@ public class MainTests {
     public static void main(String[] args) {
 
         UserRepository userRepo = new UserRepository();
+
         GroupRepository groupRepo = new GroupRepository();
+
+        User u = userRepo.findOneByUsername("toto", "password");
 
 
         /*

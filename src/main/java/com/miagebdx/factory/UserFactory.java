@@ -1,7 +1,6 @@
 package com.miagebdx.factory;
 
 import com.miagebdx.domain.User;
-import com.miagebdx.interfaces.IFactory;
 import com.miagebdx.utils.DAOUtils;
 import com.miagebdx.xml.XMLHandler;
 

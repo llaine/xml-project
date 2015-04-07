@@ -18,7 +18,7 @@ app.factory('Login', ['$resource', function ($resource) {
 }]);
 
 
-app.service('Auth', ['$http', '$cookieStore', 'Login', function ($http, $cookieStore, Login) {
+app.service('Auth', ['$http', '$cookieStore', 'Login', 'UsersResource', function ($http, $cookieStore, Login, UsersResource) {
 
     /**
      * Check if the user is well connected by testing the backend and the cookies.
@@ -98,7 +98,9 @@ app.service('Auth', ['$http', '$cookieStore', 'Login', function ($http, $cookieS
 
 
     function currentUser(){
-        return $cookieStore.get('currentUser');
+        if($cookieStore.get('currentUser')){
+            return UsersResource.get({id:$cookieStore.get('currentUser').id});
+        }
     }
 
     return {
