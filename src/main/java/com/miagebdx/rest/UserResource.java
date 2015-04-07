@@ -142,14 +142,15 @@ public class UserResource {
      * @param idUser
      * @return
      */
-    @RequestMapping(method = RequestMethod.DELETE,
+    @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
-            value = "/users/{idUser}/dependencies")
-    public @ResponseBody ResponseEntity<?> getDependeciesForUser(@PathVariable Long idUser) {
-        log.info("Removing friend from user's list.");
+            value = "/users/{idUser}/dependencies/{idContact}")
+    public @ResponseBody ResponseEntity<?> getDependeciesForUser(@PathVariable Long idUser, @PathVariable Long idContact) {
+        log.info("Getting dependencies for {} ", idContact);
 
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(
+                userRepo.getDependenciesForUser(idUser, idContact),
+                HttpStatus.OK);
     }
 
 

@@ -24,10 +24,13 @@ app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',
         }
     }
 
-    function h(){
-        console.log(arguments);
-    }
 
+    function h(data, status) {
+        if(status === 200){
+            console.log(arguments);
+            reset();
+        }
+    };
 
     $scope.addContact = function (newUser) {
 

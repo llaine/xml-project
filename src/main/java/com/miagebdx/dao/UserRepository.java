@@ -313,6 +313,36 @@ public class UserRepository extends UserFactory {
     }
 
 
+    /**
+     * Get all the group where the contact is in.
+     * @param idUser
+     * @param idContact
+     * @return
+     */
+    public List getDependenciesForUser(Long idUser, Long idContact){
+        List<Group> groupsWhereUserIsIn = new ArrayList<>();
+
+        User user = (User) this.load(idUser);
+
+        if(user == null) throw new NotFoundException();
+
+        if(idUser == null || idContact == null) throw new MissingParametersException();
+
+        for(Group g : user.getGroups()) {
+
+            List members = g.getMembers()
+                            .stream()
+                            .filter(u -> u.getId().equals(idContact))
+                            .collect(Collectors.toCollection(ArrayList::new));
+
+            if(members.size() != 0){
+                groupsWhereUserIsIn.add(g);
+            }
+
+        }
+
+        return groupsWhereUserIsIn;
+    }
 
     public Long getRandomLong(){
         long LOWER_RANGE = 0;

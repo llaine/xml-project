@@ -13,8 +13,10 @@ app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope,
 
     $scope.friends = $scope.currentUser.friends;
 
-    function h() {
-        console.log(arguments);
+    function h(data, status) {
+        if(status === 200){
+            console.log(arguments);
+        }
     };
 
     $scope.createGroup = function (newGroup) {
@@ -38,6 +40,11 @@ app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope,
                 idGroup + '/friends/' +
                 idContact
         }).success(h).error(h);
+
+
+        setTimeout(function () {
+            location.reload();
+        }, 200);
 
     };
 
