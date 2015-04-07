@@ -11,7 +11,6 @@ app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',
 
     $scope.currentUser = Auth.currentUser();
 
-
     function reset(){
         $scope.newUser = {
             firstname: null,
@@ -24,13 +23,12 @@ app.controller('friendsController', ['$scope', 'Auth', '$http', 'UsersResource',
         }
     }
 
-
     function h(data, status) {
         if(status === 200){
             console.log(arguments);
             reset();
         }
-    };
+    }
 
     $scope.addContact = function (newUser) {
 

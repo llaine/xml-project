@@ -4,6 +4,8 @@ import com.miagebdx.domain.Group;
 import com.miagebdx.utils.DAOUtils;
 import com.miagebdx.xml.XMLHandler;
 
+import java.util.List;
+
 /**
  * projetXML
  *

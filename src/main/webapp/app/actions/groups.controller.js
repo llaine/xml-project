@@ -8,6 +8,9 @@ var app = angular.module('ngContactManager');
 
 app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope, Auth, $http) {
     $scope.newGroup = {name: null, members:null};
+    function reset(){
+        $scope.newGroup = {name: null, members:null};
+    }
 
     $scope.currentUser = Auth.currentUser();
 
@@ -28,6 +31,7 @@ app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope,
             data:newGroup
         }).success(h).error(h);
 
+        reset();
     };
 
     $scope.addMember = function (idContact, idGroup) {
@@ -49,12 +53,13 @@ app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope,
     };
 
     $scope.deleteGroup = function (group) {
-        $scope.currentUser.groups.splice($scope.currentUser.groups.indexOf(group), 1);
 
         $http({
             method:'DELETE',
             url:'http://localhost:9000/api/users/' + $scope.currentUser.id + '/groups/' + group.id
         }).success(h).error(h);
+
+        $scope.currentUser.groups.splice($scope.currentUser.groups.indexOf(group), 1);
     };
 
     $scope.removeFromGroup = function (member, group) {
@@ -65,6 +70,12 @@ app.controller('groupsController', ['$scope', 'Auth', '$http', function ($scope,
                 group.id + '/friends/' +
                 member.id
         }).success(h).error(h);
+
+
+        setTimeout(function () {
+            location.reload();
+        }, 200);
+
 
     };
 

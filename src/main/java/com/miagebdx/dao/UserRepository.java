@@ -63,6 +63,26 @@ public class UserRepository extends UserFactory {
     /**
      *
      * @param username
+     * @return
+     */
+    public Boolean checkIfUsernameExists(String username){
+        log.info("Checking if the username {} exists ", username);
+        Boolean exists = false;
+
+        List<User> lesUsers = this.findAll();
+
+       for(User u : lesUsers){
+           if(u.getFirstname().equals(username)){
+               exists = true;
+           }
+       }
+
+        return exists;
+    }
+
+    /**
+     *
+     * @param username
      * @param password
      * @return
      */
@@ -330,15 +350,16 @@ public class UserRepository extends UserFactory {
 
         for(Group g : user.getGroups()) {
 
-            List members = g.getMembers()
-                            .stream()
-                            .filter(u -> u.getId().equals(idContact))
-                            .collect(Collectors.toCollection(ArrayList::new));
+            if(g.getMembers() != null){
+                List members = g.getMembers()
+                        .stream()
+                        .filter(u -> u.getId().equals(idContact))
+                        .collect(Collectors.toCollection(ArrayList::new));
 
-            if(members.size() != 0){
-                groupsWhereUserIsIn.add(g);
+                if(members.size() != 0){
+                    groupsWhereUserIsIn.add(g);
+                }
             }
-
         }
 
         return groupsWhereUserIsIn;

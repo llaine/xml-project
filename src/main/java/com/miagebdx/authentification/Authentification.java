@@ -56,13 +56,27 @@ public class Authentification {
 
     }
 
-
     /**
-     * GET -> /register : Register a user.
+     * GET -> /authenticate :Authenticate with the right username and password.
      * @return
      */
+    @RequestMapping(value="/check/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<?> checkIfUserNameExists(@PathVariable String name, HttpSession session) {
+        authUtils.firewall(session);
+
+        return new ResponseEntity<>(
+                    userRepo.checkIfUsernameExists(name),
+                    HttpStatus.OK
+                );
+
+    }
+
+        /**
+         * GET -> /register : Register a user.
+         * @return
+         */
     @RequestMapping(value="/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<?> register(@ModelAttribute User u){
+    public @ResponseBody ResponseEntity<?> register(@RequestBody User u){
 
         log.info("Trying to create a new user {} ", u);
 

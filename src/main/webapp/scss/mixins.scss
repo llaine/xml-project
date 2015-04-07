@@ -30,3 +30,15 @@ div {
     background: #4285f4 !important;
   }
 }
+
+@media print
+{
+
+  button {
+    display: none !important;
+  }
+  .no-print, .no-print *
+  {
+    display: none !important;
+  }
+}
