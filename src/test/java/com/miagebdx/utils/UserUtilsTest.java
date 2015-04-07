@@ -20,12 +20,9 @@ public class UserUtilsTest extends TestCase {
         User userOne = userRepository.createClass("firstname", "lastname", "password", "email", "birthdayDate");
         User userUpdated = userRepository.createClass("michel", "lastname", "pwd", "email", "birthdayDate");
 
-
         User newUser = userUtils.diff(userOne, userUpdated);
 
-
         assertEquals(userUpdated.equals(newUser), true);
-
     }
 
     public void testIsValidUser() throws Exception {
@@ -37,6 +34,5 @@ public class UserUtilsTest extends TestCase {
 
         assertEquals(userUtils.isValidUser(inValidUser), isFalse);
         assertEquals(userUtils.isValidUser(validUser), isTrue);
-
     }
 }

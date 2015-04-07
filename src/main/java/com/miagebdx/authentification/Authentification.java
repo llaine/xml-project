@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public class Authentification {
         User u = userRepo.findOneByUsername(username, password);
 
         // Create a session with credentials.
-        if(u != null){
+        if(null != u) {
             authUtils.bootstrapCredentials(u, session);
         }
 
